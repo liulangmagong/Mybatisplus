@@ -1,0 +1,23 @@
+spring:
+  # 设置开发环境
+  profiles:
+    active: dev
+  # 数据库连接配置
+  datasource:
+    # mysql5的驱动是: com.mysql.jdbc.Driver
+    # 驱动的版本是向下兼容的，所以这里直接使用mysql8的驱动即可
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: Asd19941215
+    # //之前就理解为http:即可 3306后边连接的就是数据库的名字 类似于配置访问接口
+    # useSSL：是否使用安全连接  Mac本的话，true可能会报错，故使用false
+    # mysql8后边一定要加时区配置，否则访问不了
+    # useUnicode：是否使用Unicode字符集，如果参数characterEncoding设置为utf-8或gbk，本参数值必须设置为true
+    url: jdbc:mysql://localhost:3306/mybatis-plus?useSSL=false&useUnicode=ture&charaterEncoding=utf-8&serverTimezone=Asia/Shanghai
+
+# 配置MybatisPlus的逻辑删除
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-value: 1
+      logic-not-delete-value: 0

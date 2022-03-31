@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 定义日志的根目录 -->
+    <property name="logPath" value="./logs/"/>
+    <property name="logFilePrefix" value="strategy"/>
+
+    <!-- 定义一个控制台附加器-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%-5p [%d][%X{traceId}][%X{userId}][%t][%c] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+   <appender name="SQL" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}${logFilePrefix}.sql.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}${logFilePrefix}.sql.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>1000MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>%-5p [%d][%X{traceId}][%X{userId}][%t][%c] - %m%n</pattern>
+        </encoder>
+    </appender>
+
+    <!--根记录器只有一个属性就是级别属性-->
+    <root level="DEBUG">
+        <!--将附加器添加到日志记录器中-->
+    </root>
+    <!--
+        mybatis log confi gure; name为mapper文件对应的包路径, level设置的级别为DEBUG,
+        mybatis的日志级别默认为DEBUG级别;
+    -->
+    <logger name="com.liulang.dao.mapper" level="DEBUG">
+        <appender-ref ref="SQL"/>
+        <appender-ref ref="STDOUT"/>
+    </logger>
+</configuration>
